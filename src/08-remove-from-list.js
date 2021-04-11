@@ -16,9 +16,46 @@
  *   this.next = null;
  * }
  */
-
-function removeKFromList(/* l, k */) {
-  throw new Error('Not implemented');
+/* function convertArrayToList(arr) {
+  return arr.reverse().reduce((acc, cur) => {
+    if (acc) {
+      const node = new ListNode(cur);
+      node.next = acc;
+      return node;
+    }
+    return new ListNode(cur);
+  }, null);
 }
-
+*/
+/* function printList(myList) {
+  console.log();
+  console.log("--new list--");
+  while (myList !== null) {
+    console.log(myList.value);
+    myList = myList.next;
+  }
+} */
+function removeKFromList(l, k) {
+  // ссылка на начало списка
+  let l2 = l;
+  let list2 = l2;
+  // переменная чтобы знать предыдущий элемент списка
+  let previous = null;
+  // просматриваем список пока не дошли до элемента null
+  while (l2 !== null) {
+    if (l2.value === k) {
+      if (previous === null) {
+        list2 = l2.next;
+        l2 = l2.next;
+      } else {
+        // меняем ссылку у предыдущего элемента
+        previous.next = l2.next;
+        l2 = previous;
+      }
+    }
+    previous = l2;
+    l2 = l2.next;
+  }
+  return list2;
+}
 module.exports = removeKFromList;

@@ -21,8 +21,47 @@
  *  [1, 1, 1]
  * ]
  */
-function minesweeper(/* matrix */) {
-  throw new Error('Not implemented');
+function minesweeper(matrix) {
+  // двумерный массив - результирующий по размерам совадающий с исходным, но заполненный нулями
+  const mas = new Array(matrix.length);
+  for (let i = 0; i < matrix.length; i++) {
+    mas[i] = new Array(matrix[i].length);
+    for (let j = 0; j < matrix[i].length; j++) {
+      mas[i][j] = 0;
+    }
+  }
+  for (let i = 0; i < matrix.length; i++) {
+    for (let j = 0; j < matrix[i].length; j++) {
+      if (matrix[i][j]) {
+        switch (i) {
+          case 0: {
+            mas[i + 1][j]++;
+            switch (j) {
+              case 0: { mas[i + 1][j + 1]++; mas[i][j + 1]++; break; }
+              case (matrix[i].length - 1): { mas[i][j - 1]++; break; }
+              default: { mas[i + 1][j + 1]++; mas[i][j + 1]++; mas[i][j - 1]++; }
+            }
+            break;
+          }
+          case (matrix.length - 1): {
+            mas[i - 1][j]++;
+            switch (j) {
+              case 0: { mas[i][j + 1]++; break; }
+              case (matrix[i].length - 1): { mas[i - 1][j - 1]++; mas[i][j - 1]++; break; }
+              default: { mas[i - 1][j - 1]++; mas[i][j - 1]++; mas[i][j + 1]++; }
+            }
+            break;
+          }
+          default: {
+            mas[i + 1][j]++; mas[i - 1][j]++;
+            mas[i - 1][j - 1]++; mas[i][j - 1]++;
+            mas[i + 1][j + 1]++; mas[i][j + 1]++;
+            mas[i + 1][j - 1]++; mas[i - 1][j + 1]++;
+          }
+        }
+      }
+    }
+  }
+  return mas;
 }
-
 module.exports = minesweeper;
